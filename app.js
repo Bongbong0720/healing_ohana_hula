@@ -57,7 +57,7 @@
   function renderContext() {
     const selected = state.selection !== 'all';
     $('view-title').textContent = state.mode === 'press' ? '강남라이프의 시선으로' : state.mode === 'song' ? selected ? LABELS[state.selection] : '네 곡의 이야기, 한 걸음씩' : selected ? state.selection + '주차의 기록' : '열 번의 만남, 우리의 기록';
-    $('view-description').textContent = state.mode === 'press' ? '강남라이프 촬영 · 함께한 순간을 담은 기록입니다.' : state.mode === 'song' ? state.selection === 'unassigned' ? '원본 파일에 곡명이 없는 영상입니다. 잘못 분류하지 않도록 따로 모았습니다.' : '연습곡별로 모은 영상입니다. 사진은 제외했으며, 곡명이 없는 영상은 곡 미분류에서 볼 수 있습니다.' : '수업 영상부터 사진까지, 그날의 순간들을 함께 살펴보세요.';
+    $('view-description').textContent = state.mode === 'press' ? '강남라이프 촬영 · 함께한 순간을 담은 기록입니다.' : state.mode === 'song' ? state.selection === 'unassigned' ? '원본 파일에 곡명이 없는 영상입니다. 잘못 분류하지 않도록 따로 모았습니다.' : '강사 영상과 연습 영상을 곡별로 모았습니다. 출석사진 등 사진은 주차별 기록에서 볼 수 있습니다.' : '수업 영상부터 사진까지, 그날의 순간들을 함께 살펴보세요.';
     const note = $('curriculum-note'); note.replaceChildren();
     const plans = state.mode === 'week' && selected ? state.curriculum.filter(row => String(row.week) === state.selection) : [];
     note.hidden = !plans.length;
@@ -130,7 +130,7 @@
     try {
       const response = await fetch('./media.json'); if (!response.ok) throw new Error('HTTP ' + response.status);
       const data = await response.json(); if (!data || !Array.isArray(data.items)) throw new Error('Invalid media data');
-      state.items = data.items.filter(item => item && ['image', 'video'].includes(item.type) && asset(item.src)).map((item, index) => ({ ...item, id: item.id || 'record-' + index, week: Number.isInteger(item.week) && item.week >= 1 && item.week <= 10 ? item.week : null }));
+      state.items = data.items.filter(item => item && ['image', 'video'].includes(item.type) && asset(item.src)).map((item, index) => ({ ...item, id: item.id || 'record-' + index, week: Number.isInteger(item.week) && item.week >= 1 && item.week <= 10 ? item.week : null })).sort((a, b) => (a.week || 99) - (b.week || 99));
       state.curriculum = (Array.isArray(data.curriculum) ? data.curriculum : []).filter(row => row && Number.isInteger(row.week) && row.week >= 1 && row.week <= 10).map(row => ({ week: row.week, songs: Array.isArray(row.songs) ? row.songs.filter(value => typeof value === 'string') : [], note: typeof row.note === 'string' ? row.note : '' })).sort((a, b) => a.week - b.week);
       state.loaded = true; for (const mode of ['week', 'song', 'press']) $('count-' + mode).textContent = pool(mode).length;
       renderCurriculum(); renderWorkshop();
