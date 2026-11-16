@@ -1,0 +1,958 @@
+{
+  "items": [
+    {
+      "id": "w10-01",
+      "src": "w10-01.jpg",
+      "thumb": "w10-01.jpg",
+      "type": "image",
+      "week": 10,
+      "song": null,
+      "category": "attendance",
+      "title": "출석사진",
+      "original": "10주차_261111 출석사진.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w10-02",
+      "src": "w10-02.mp4",
+      "thumb": "w10-02-thumb.jpg",
+      "type": "video",
+      "week": 10,
+      "song": "hawaiian-wedding",
+      "category": "practice",
+      "title": "Hawaiian Wedding Song 연습영상",
+      "original": "10주차_261111 Hawaiian Wedding Song 연습영상.mp4",
+      "duration": 147.855121
+    },
+    {
+      "id": "w01-01",
+      "src": "w01-01.mp4",
+      "thumb": "w01-01-thumb.jpg",
+      "type": "video",
+      "week": 1,
+      "song": "unassigned",
+      "category": "instructor",
+      "title": "수업영상",
+      "original": "1주차_수업영상.png",
+      "duration": 54.708333
+    },
+    {
+      "id": "w01-02",
+      "src": "w01-02.jpg",
+      "thumb": "w01-02.jpg",
+      "type": "image",
+      "week": 1,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진 01",
+      "original": "1주차_연습사진 01.png",
+      "duration": 0
+    },
+    {
+      "id": "w01-03",
+      "src": "w01-03.mp4",
+      "thumb": "w01-03-thumb.jpg",
+      "type": "video",
+      "week": 1,
+      "song": "unassigned",
+      "category": "practice",
+      "title": "연습영상 02",
+      "original": "1주차_연습영상 02.png",
+      "duration": 66.666667
+    },
+    {
+      "id": "w01-04",
+      "src": "w01-04.mp4",
+      "thumb": "w01-04-thumb.jpg",
+      "type": "video",
+      "week": 1,
+      "song": "unassigned",
+      "category": "practice",
+      "title": "연습영상 03",
+      "original": "1주차_연습영상 03.mp4",
+      "duration": 67.249667
+    },
+    {
+      "id": "w02-01",
+      "src": "w02-01.mp4",
+      "thumb": "w02-01-thumb.jpg",
+      "type": "video",
+      "week": 2,
+      "song": "unassigned",
+      "category": "instructor",
+      "title": "수업영상",
+      "original": "2주차_수업영상.mp4",
+      "duration": 111.133333
+    },
+    {
+      "id": "w02-02",
+      "src": "w02-02.jpg",
+      "thumb": "w02-02.jpg",
+      "type": "image",
+      "week": 2,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진 01",
+      "original": "2주차_연습사진 01.png",
+      "duration": 0
+    },
+    {
+      "id": "w02-03",
+      "src": "w02-03.jpg",
+      "thumb": "w02-03.jpg",
+      "type": "image",
+      "week": 2,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진 02",
+      "original": "2주차_연습사진 02.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w02-04",
+      "src": "w02-04.jpg",
+      "thumb": "w02-04.jpg",
+      "type": "image",
+      "week": 2,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진 03",
+      "original": "2주차_연습사진 03.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w02-05",
+      "src": "w02-05.jpg",
+      "thumb": "w02-05.jpg",
+      "type": "image",
+      "week": 2,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진 04",
+      "original": "2주차_연습사진 04.png",
+      "duration": 0
+    },
+    {
+      "id": "w02-06",
+      "src": "w02-06.mp4",
+      "thumb": "w02-06-thumb.jpg",
+      "type": "video",
+      "week": 2,
+      "song": "unassigned",
+      "category": "practice",
+      "title": "연습영상 01",
+      "original": "2주차_연습영상 01.mp4",
+      "duration": 59.356333
+    },
+    {
+      "id": "w02-07",
+      "src": "w02-07.mp4",
+      "thumb": "w02-07-thumb.jpg",
+      "type": "video",
+      "week": 2,
+      "song": "basic",
+      "category": "practice",
+      "title": "Step Basic",
+      "original": "2주차_Step Basic.png",
+      "duration": 376.927877
+    },
+    {
+      "id": "w03-01",
+      "src": "w03-01.jpg",
+      "thumb": "w03-01.jpg",
+      "type": "image",
+      "week": 3,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진01",
+      "original": "3주차_연습사진01.png.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w03-02",
+      "src": "w03-02.jpg",
+      "thumb": "w03-02.jpg",
+      "type": "image",
+      "week": 3,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진02",
+      "original": "3주차_연습사진02.png.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w03-03",
+      "src": "w03-03.jpg",
+      "thumb": "w03-03.jpg",
+      "type": "image",
+      "week": 3,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진03",
+      "original": "3주차_연습사진03.png.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w04-01",
+      "src": "w04-01.mp4",
+      "thumb": "w04-01-thumb.jpg",
+      "type": "video",
+      "week": 4,
+      "song": "ke-aloha",
+      "category": "practice",
+      "title": "Ke Aloha 01",
+      "original": "4주차 Ke Aloha_01.png",
+      "duration": 0
+    },
+    {
+      "id": "w04-02",
+      "src": "w04-02.mp4",
+      "thumb": "w04-02-thumb.jpg",
+      "type": "video",
+      "week": 4,
+      "song": "ke-aloha",
+      "category": "practice",
+      "title": "Ke Aloha 02",
+      "original": "4주차 Ke Aloha_02.png",
+      "duration": 0
+    },
+    {
+      "id": "w04-03",
+      "src": "w04-03.mp4",
+      "thumb": "w04-03-thumb.jpg",
+      "type": "video",
+      "week": 4,
+      "song": "pearly-shells",
+      "category": "practice",
+      "title": "Pearly Shell 01",
+      "original": "4주차_Pearly Shell_01.png",
+      "duration": 0
+    },
+    {
+      "id": "w05-01",
+      "src": "w05-01.jpg",
+      "thumb": "w05-01.jpg",
+      "type": "image",
+      "week": 5,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진01",
+      "original": "5주차_연습사진01.png",
+      "duration": 0
+    },
+    {
+      "id": "w05-02",
+      "src": "w05-02.jpg",
+      "thumb": "w05-02.jpg",
+      "type": "image",
+      "week": 5,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진02",
+      "original": "5주차_연습사진02.png",
+      "duration": 0
+    },
+    {
+      "id": "w05-03",
+      "src": "w05-03.jpg",
+      "thumb": "w05-03.jpg",
+      "type": "image",
+      "week": 5,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진03",
+      "original": "5주차_연습사진03.png",
+      "duration": 0
+    },
+    {
+      "id": "w05-04",
+      "src": "w05-04.jpg",
+      "thumb": "w05-04.jpg",
+      "type": "image",
+      "week": 5,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진04",
+      "original": "5주차_연습사진04.png",
+      "duration": 0
+    },
+    {
+      "id": "w05-05",
+      "src": "w05-05.mp4",
+      "thumb": "w05-05-thumb.jpg",
+      "type": "video",
+      "week": 5,
+      "song": "ke-aloha",
+      "category": "instructor",
+      "title": "Ke Aloha full",
+      "original": "5주차_Ke Aloha full.mp4",
+      "duration": 0
+    },
+    {
+      "id": "w05-06",
+      "src": "w05-06.mp4",
+      "thumb": "w05-06-thumb.jpg",
+      "type": "video",
+      "week": 5,
+      "song": "ke-ao-nani",
+      "category": "practice",
+      "title": "Ke Ao Nani",
+      "original": "5주차_Ke Ao Nani.mp4.mp3",
+      "duration": 0
+    },
+    {
+      "id": "w06-01",
+      "src": "w06-01.jpg",
+      "thumb": "w06-01.jpg",
+      "type": "image",
+      "week": 6,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진 01",
+      "original": "6주차_연습사진 01.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w06-02",
+      "src": "w06-02.jpg",
+      "thumb": "w06-02.jpg",
+      "type": "image",
+      "week": 6,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진 02",
+      "original": "6주차_연습사진 02.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w06-03",
+      "src": "w06-03.mp4",
+      "thumb": "w06-03-thumb.jpg",
+      "type": "video",
+      "week": 6,
+      "song": "hawaiian-wedding",
+      "category": "practice",
+      "title": "Hawaiian Wedding Song",
+      "original": "6주차_Hawaiian Wedding Song.mp4.mp4",
+      "duration": 0
+    },
+    {
+      "id": "w07-01",
+      "src": "w07-01.jpg",
+      "thumb": "w07-01.jpg",
+      "type": "image",
+      "week": 7,
+      "song": null,
+      "category": "photo",
+      "title": "연습사진",
+      "original": "7주차_연습사진.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w07-02",
+      "src": "w07-02.mp4",
+      "thumb": "w07-02-thumb.jpg",
+      "type": "video",
+      "week": 7,
+      "song": "hawaiian-wedding",
+      "category": "practice",
+      "title": "Hawaiian Wedding Song 연습영상",
+      "original": "7주차_Hawaiian Wedding Song 연습영상.mp4",
+      "duration": 0
+    },
+    {
+      "id": "w07-03",
+      "src": "w07-03.mp4",
+      "thumb": "w07-03-thumb.jpg",
+      "type": "video",
+      "week": 7,
+      "song": "hawaiian-wedding",
+      "category": "instructor",
+      "title": "Hawaiian Wedding Song part 2",
+      "original": "7주차_Hawaiian Wedding Song part 2.mp4",
+      "duration": 0
+    },
+    {
+      "id": "w07-04",
+      "src": "w07-04.mp4",
+      "thumb": "w07-04-thumb.jpg",
+      "type": "video",
+      "week": 7,
+      "song": "ke-aloha",
+      "category": "practice",
+      "title": "Ke Aloha 연습영상",
+      "original": "7주차_Ke Aloha 연습영상.mp4",
+      "duration": 0
+    },
+    {
+      "id": "w08-01",
+      "src": "w08-01.mp4",
+      "thumb": "w08-01-thumb.jpg",
+      "type": "video",
+      "week": 8,
+      "song": "ke-aloha",
+      "category": "practice",
+      "title": "Ke Aloha 자체연습영상",
+      "original": "8주차_20261028 Ke Aloha 자체연습영상.mp4",
+      "duration": 0
+    },
+    {
+      "id": "w09-01",
+      "src": "w09-01.jpg",
+      "thumb": "w09-01.jpg",
+      "type": "image",
+      "week": 9,
+      "song": null,
+      "category": "attendance",
+      "title": "출석사진 01",
+      "original": "9주차_261102 출석사진 01.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w09-02",
+      "src": "w09-02.jpg",
+      "thumb": "w09-02.jpg",
+      "type": "image",
+      "week": 9,
+      "song": null,
+      "category": "attendance",
+      "title": "출석사진 02",
+      "original": "9주차_261102 출석사진 02.jpg",
+      "duration": 0
+    },
+    {
+      "id": "w09-03",
+      "src": "w09-03.mp4",
+      "thumb": "w09-03-thumb.jpg",
+      "type": "video",
+      "week": 9,
+      "song": "hawaiian-wedding",
+      "category": "practice",
+      "title": "Hawaiian Wedding Song 연습영상",
+      "original": "9주차_261102 Hwaiian Wedding Song 연습영상.mp4",
+      "duration": 0
+    },
+    {
+      "id": "w09-04",
+      "src": "w09-04.mp4",
+      "thumb": "w09-04-thumb.jpg",
+      "type": "video",
+      "week": 9,
+      "song": "ke-aloha",
+      "category": "practice",
+      "title": "Ke Aloha 연습영상",
+      "original": "9주차_261102 Ke Aloha 연습영상.mp4",
+      "duration": 0
+    },
+    {
+      "id": "press-01",
+      "src": "press-01.jpg",
+      "thumb": "press-01.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 01",
+      "original": "강남라이프 사진_01.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-02",
+      "src": "press-02.jpg",
+      "thumb": "press-02.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 02",
+      "original": "강남라이프 사진_02.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-03",
+      "src": "press-03.jpg",
+      "thumb": "press-03.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 03",
+      "original": "강남라이프 사진_03.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-04",
+      "src": "press-04.jpg",
+      "thumb": "press-04.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 04",
+      "original": "강남라이프 사진_04.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-05",
+      "src": "press-05.jpg",
+      "thumb": "press-05.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 05",
+      "original": "강남라이프 사진_05.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-06",
+      "src": "press-06.jpg",
+      "thumb": "press-06.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 06",
+      "original": "강남라이프 사진_06.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-07",
+      "src": "press-07.jpg",
+      "thumb": "press-07.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 07",
+      "original": "강남라이프 사진_07.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-08",
+      "src": "press-08.jpg",
+      "thumb": "press-08.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 08",
+      "original": "강남라이프 사진_08.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-09",
+      "src": "press-09.jpg",
+      "thumb": "press-09.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 09",
+      "original": "강남라이프 사진_09.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-10",
+      "src": "press-10.jpg",
+      "thumb": "press-10.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 10",
+      "original": "강남라이프 사진_10.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-11",
+      "src": "press-11.jpg",
+      "thumb": "press-11.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 11",
+      "original": "강남라이프 사진_11.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-12",
+      "src": "press-12.jpg",
+      "thumb": "press-12.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 12",
+      "original": "강남라이프 사진_12.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-13",
+      "src": "press-13.jpg",
+      "thumb": "press-13.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 13",
+      "original": "강남라이프 사진_13.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-14",
+      "src": "press-14.jpg",
+      "thumb": "press-14.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 14",
+      "original": "강남라이프 사진_14.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-15",
+      "src": "press-15.jpg",
+      "thumb": "press-15.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 15",
+      "original": "강남라이프 사진_15.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-16",
+      "src": "press-16.jpg",
+      "thumb": "press-16.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 16",
+      "original": "강남라이프 사진_16.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-17",
+      "src": "press-17.jpg",
+      "thumb": "press-17.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 17",
+      "original": "강남라이프 사진_17.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-18",
+      "src": "press-18.jpg",
+      "thumb": "press-18.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 18",
+      "original": "강남라이프 사진_18.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-19",
+      "src": "press-19.jpg",
+      "thumb": "press-19.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 19",
+      "original": "강남라이프 사진_19.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-20",
+      "src": "press-20.jpg",
+      "thumb": "press-20.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 20",
+      "original": "강남라이프 사진_20.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-21",
+      "src": "press-21.jpg",
+      "thumb": "press-21.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 21",
+      "original": "강남라이프 사진_21.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-22",
+      "src": "press-22.jpg",
+      "thumb": "press-22.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 22",
+      "original": "강남라이프 사진_22.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-23",
+      "src": "press-23.jpg",
+      "thumb": "press-23.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 23",
+      "original": "강남라이프 사진_23.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-24",
+      "src": "press-24.jpg",
+      "thumb": "press-24.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 24",
+      "original": "강남라이프 사진_24.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-25",
+      "src": "press-25.jpg",
+      "thumb": "press-25.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 25",
+      "original": "강남라이프 사진_25.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-26",
+      "src": "press-26.jpg",
+      "thumb": "press-26.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 26",
+      "original": "강남라이프 사진_26.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-27",
+      "src": "press-27.jpg",
+      "thumb": "press-27.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 27",
+      "original": "강남라이프 사진_27.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-28",
+      "src": "press-28.jpg",
+      "thumb": "press-28.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 28",
+      "original": "강남라이프 사진_28.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-29",
+      "src": "press-29.jpg",
+      "thumb": "press-29.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 사진 29",
+      "original": "강남라이프 사진_29.jpg",
+      "duration": 0
+    },
+    {
+      "id": "press-interview-01",
+      "src": "press-interview-01.jpg",
+      "thumb": "press-interview-01.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 인터뷰 01",
+      "original": "강남라이프 인터뷰 01.png",
+      "duration": 0
+    },
+    {
+      "id": "press-interview-02",
+      "src": "press-interview-02.jpg",
+      "thumb": "press-interview-02.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "press",
+      "title": "강남라이프 인터뷰 02",
+      "original": "강남라이프 인터뷰 02.png",
+      "duration": 0
+    },
+    {
+      "id": "workshop-01",
+      "src": "workshop-01.jpg",
+      "thumb": "workshop-01.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "workshop",
+      "title": "정은주쌤 일본 워크샵 참석 01",
+      "original": "정은주쌤 일본 워크샵 참석 01.jpg",
+      "duration": 0
+    },
+    {
+      "id": "workshop-02",
+      "src": "workshop-02.jpg",
+      "thumb": "workshop-02.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "workshop",
+      "title": "정은주쌤 일본 워크샵 참석 02",
+      "original": "정은주쌤 일본 워크샵 참석 02.jpg",
+      "duration": 0
+    },
+    {
+      "id": "workshop-03",
+      "src": "workshop-03.jpg",
+      "thumb": "workshop-03.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "workshop",
+      "title": "정은주쌤 일본 워크샵 참석 03",
+      "original": "정은주쌤 일본 워크샵 참석 03.jpg",
+      "duration": 0
+    },
+    {
+      "id": "workshop-04",
+      "src": "workshop-04.jpg",
+      "thumb": "workshop-04.jpg",
+      "type": "image",
+      "week": null,
+      "song": null,
+      "category": "workshop",
+      "title": "정은주쌤 일본 워크샵 참석 04",
+      "original": "정은주쌤 일본 워크샵 참석 04.jpg",
+      "duration": 0
+    },
+    {
+      "id": "mv",
+      "src": "mv.mp4",
+      "thumb": "mv-poster.jpg",
+      "type": "video",
+      "week": null,
+      "song": null,
+      "category": "mv",
+      "title": "강남 힐링 훌라 오하나 · 10주의 기록",
+      "original": "강남힐링훌라오하나_10주의기록.mp4",
+      "duration": 0
+    }
+  ],
+  "curriculum": [
+    {
+      "week": 1,
+      "songs": [
+        "ke-aloha",
+        "pearly-shells"
+      ],
+      "note": "베이직 스텝 익히기 · Ke Aloha 1절 · Pearly Shell 복습 1"
+    },
+    {
+      "week": 2,
+      "songs": [
+        "ke-aloha",
+        "pearly-shells"
+      ],
+      "note": "베이직 스텝 익히기 · Ke Aloha 2절 · Pearly Shell 복습 2"
+    },
+    {
+      "week": 3,
+      "songs": [
+        "ke-aloha",
+        "pearly-shells"
+      ],
+      "note": "베이직 스텝과 팔의 움직임 · Ke Aloha 3절 · Pearly Shell 복습 3"
+    },
+    {
+      "week": 4,
+      "songs": [
+        "ke-aloha",
+        "ke-ao-nani"
+      ],
+      "note": "손목의 움직임 · Ke Aloha 4절 · Ke Ao Nani 복습 1. 실제 파일에는 Pearly Shell 영상도 포함되어 있습니다."
+    },
+    {
+      "week": 5,
+      "songs": [
+        "ke-aloha",
+        "ke-ao-nani"
+      ],
+      "note": "베이직 스텝 루틴 · Ke Aloha 총복습 · Ke Ao Nani 복습 2"
+    },
+    {
+      "week": 6,
+      "songs": [
+        "hawaiian-wedding",
+        "ke-ao-nani"
+      ],
+      "note": "베이직 스텝과 핸즈모션 · Hawaiian Wedding Song 1절 · Ke Ao Nani 복습 3"
+    },
+    {
+      "week": 7,
+      "songs": [
+        "hawaiian-wedding",
+        "ke-aloha"
+      ],
+      "note": "베이직 스텝과 핸즈모션 · Hawaiian Wedding Song 2절 · Ke Aloha 복습"
+    },
+    {
+      "week": 8,
+      "songs": [
+        "hawaiian-wedding",
+        "ke-aloha"
+      ],
+      "note": "계획: 핸즈모션 심화 · Hawaiian Wedding Song 3절 · Ke Aloha 복습. 실제 파일: 10월 28일 Ke Aloha 자체연습."
+    },
+    {
+      "week": 9,
+      "songs": [
+        "hawaiian-wedding"
+      ],
+      "note": "계획: Hawaiian Wedding Song 완성. 실제 파일: 11월 2일 연습 및 출석사진."
+    },
+    {
+      "week": 10,
+      "songs": [],
+      "note": "계획: 하와이안 헤어핀 만들기와 배운 곡 기록. 실제 파일: 11월 11일 Hawaiian Wedding Song 연습 및 출석사진."
+    }
+  ]
+}
