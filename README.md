@@ -29,3 +29,6 @@
 동영상은 자동 재생되지 않습니다. 사진 확대, 영상 재생, 이전·다음, 검색과 필터, 모바일 화면 및 키보드 탐색을 지원합니다.
 
 강남라이프 사진의 촬영 출처는 강남라이프입니다. 사진·영상의 권리는 각 권리자에게 있으며 공개 저장소에 포함되었다는 사실이 재사용 허락을 뜻하지는 않습니다.
+
+## Hero typography
+Nanum Brush Script by Sandoll / NHN, self-hosted under the SIL Open Font License 1.1. See FONT-LICENSE.txt.
