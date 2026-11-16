@@ -1,38 +1,14 @@
 {
   "items": [
     {
-      "id": "w10-01",
-      "src": "w10-01.jpg",
-      "thumb": "w10-01.jpg",
-      "type": "image",
-      "week": 10,
-      "song": null,
-      "category": "attendance",
-      "title": "출석사진",
-      "original": "10주차_261111 출석사진.jpg",
-      "duration": 0
-    },
-    {
-      "id": "w10-02",
-      "src": "w10-02.mp4",
-      "thumb": "w10-02-thumb.jpg",
-      "type": "video",
-      "week": 10,
-      "song": "hawaiian-wedding",
-      "category": "practice",
-      "title": "Hawaiian Wedding Song 연습영상",
-      "original": "10주차_261111 Hawaiian Wedding Song 연습영상.mp4",
-      "duration": 147.855121
-    },
-    {
       "id": "w01-01",
       "src": "w01-01.mp4",
       "thumb": "w01-01-thumb.jpg",
       "type": "video",
       "week": 1,
-      "song": "unassigned",
+      "song": "ke-aloha",
       "category": "instructor",
-      "title": "수업영상",
+      "title": "Ke Aloha 1절 · 강사 영상",
       "original": "1주차_수업영상.png",
       "duration": 54.708333
     },
@@ -54,9 +30,9 @@
       "thumb": "w01-03-thumb.jpg",
       "type": "video",
       "week": 1,
-      "song": "unassigned",
+      "song": "ke-aloha",
       "category": "practice",
-      "title": "연습영상 02",
+      "title": "Ke Aloha · 연습영상 02",
       "original": "1주차_연습영상 02.png",
       "duration": 66.666667
     },
@@ -66,9 +42,9 @@
       "thumb": "w01-04-thumb.jpg",
       "type": "video",
       "week": 1,
-      "song": "unassigned",
+      "song": "ke-aloha",
       "category": "practice",
-      "title": "연습영상 03",
+      "title": "Ke Aloha · 연습영상 03",
       "original": "1주차_연습영상 03.mp4",
       "duration": 67.249667
     },
@@ -78,9 +54,9 @@
       "thumb": "w02-01-thumb.jpg",
       "type": "video",
       "week": 2,
-      "song": "unassigned",
+      "song": "ke-aloha",
       "category": "instructor",
-      "title": "수업영상",
+      "title": "Ke Aloha 1~2절 · 강사 영상",
       "original": "2주차_수업영상.mp4",
       "duration": 111.133333
     },
@@ -138,9 +114,9 @@
       "thumb": "w02-06-thumb.jpg",
       "type": "video",
       "week": 2,
-      "song": "unassigned",
+      "song": "ke-aloha",
       "category": "practice",
-      "title": "연습영상 01",
+      "title": "Ke Aloha · 연습영상 01",
       "original": "2주차_연습영상 01.mp4",
       "duration": 59.356333
     },
@@ -151,8 +127,8 @@
       "type": "video",
       "week": 2,
       "song": "basic",
-      "category": "practice",
-      "title": "Step Basic",
+      "category": "instructor",
+      "title": "기본 스텝 · 강사 설명",
       "original": "2주차_Step Basic.png",
       "duration": 376.927877
     },
@@ -199,10 +175,10 @@
       "type": "video",
       "week": 4,
       "song": "ke-aloha",
-      "category": "practice",
-      "title": "Ke Aloha 01",
+      "category": "instructor",
+      "title": "Ke Aloha · Kealiʻi 음원 강사 영상",
       "original": "4주차 Ke Aloha_01.png",
-      "duration": 0
+      "duration": 219.625
     },
     {
       "id": "w04-02",
@@ -211,10 +187,10 @@
       "type": "video",
       "week": 4,
       "song": "ke-aloha",
-      "category": "practice",
-      "title": "Ke Aloha 02",
+      "category": "instructor",
+      "title": "Ke Aloha · Maunalua 음원 강사 영상",
       "original": "4주차 Ke Aloha_02.png",
-      "duration": 0
+      "duration": 222.25
     },
     {
       "id": "w04-03",
@@ -223,10 +199,10 @@
       "type": "video",
       "week": 4,
       "song": "pearly-shells",
-      "category": "practice",
-      "title": "Pearly Shell 01",
+      "category": "instructor",
+      "title": "Pearly Shell · 강사 영상",
       "original": "4주차_Pearly Shell_01.png",
-      "duration": 0
+      "duration": 130
     },
     {
       "id": "w05-01",
@@ -286,7 +262,7 @@
       "category": "instructor",
       "title": "Ke Aloha full",
       "original": "5주차_Ke Aloha full.mp4",
-      "duration": 0
+      "duration": 209.416667
     },
     {
       "id": "w05-06",
@@ -296,9 +272,9 @@
       "week": 5,
       "song": "ke-ao-nani",
       "category": "practice",
-      "title": "Ke Ao Nani",
+      "title": "Ke Ao Nani 1~2절 · 연습영상",
       "original": "5주차_Ke Ao Nani.mp4.mp3",
-      "duration": 0
+      "duration": 205.100065
     },
     {
       "id": "w06-01",
@@ -334,7 +310,7 @@
       "category": "practice",
       "title": "Hawaiian Wedding Song",
       "original": "6주차_Hawaiian Wedding Song.mp4.mp4",
-      "duration": 0
+      "duration": 132.635333
     },
     {
       "id": "w07-01",
@@ -358,7 +334,7 @@
       "category": "practice",
       "title": "Hawaiian Wedding Song 연습영상",
       "original": "7주차_Hawaiian Wedding Song 연습영상.mp4",
-      "duration": 0
+      "duration": 82.371979
     },
     {
       "id": "w07-03",
@@ -370,7 +346,7 @@
       "category": "instructor",
       "title": "Hawaiian Wedding Song part 2",
       "original": "7주차_Hawaiian Wedding Song part 2.mp4",
-      "duration": 0
+      "duration": 93.303354
     },
     {
       "id": "w07-04",
@@ -382,7 +358,7 @@
       "category": "practice",
       "title": "Ke Aloha 연습영상",
       "original": "7주차_Ke Aloha 연습영상.mp4",
-      "duration": 0
+      "duration": 215.5
     },
     {
       "id": "w08-01",
@@ -394,7 +370,7 @@
       "category": "practice",
       "title": "Ke Aloha 자체연습영상",
       "original": "8주차_20261028 Ke Aloha 자체연습영상.mp4",
-      "duration": 0
+      "duration": 210.533333
     },
     {
       "id": "w09-01",
@@ -430,7 +406,7 @@
       "category": "practice",
       "title": "Hawaiian Wedding Song 연습영상",
       "original": "9주차_261102 Hwaiian Wedding Song 연습영상.mp4",
-      "duration": 0
+      "duration": 87.033333
     },
     {
       "id": "w09-04",
@@ -442,7 +418,31 @@
       "category": "practice",
       "title": "Ke Aloha 연습영상",
       "original": "9주차_261102 Ke Aloha 연습영상.mp4",
+      "duration": 218.766667
+    },
+    {
+      "id": "w10-01",
+      "src": "w10-01.jpg",
+      "thumb": "w10-01.jpg",
+      "type": "image",
+      "week": 10,
+      "song": null,
+      "category": "attendance",
+      "title": "출석사진",
+      "original": "10주차_261111 출석사진.jpg",
       "duration": 0
+    },
+    {
+      "id": "w10-02",
+      "src": "w10-02.mp4",
+      "thumb": "w10-02-thumb.jpg",
+      "type": "video",
+      "week": 10,
+      "song": "hawaiian-wedding",
+      "category": "practice",
+      "title": "Hawaiian Wedding Song 연습영상",
+      "original": "10주차_261111 Hawaiian Wedding Song 연습영상.mp4",
+      "duration": 147.855121
     },
     {
       "id": "press-01",
@@ -874,7 +874,7 @@
       "category": "mv",
       "title": "강남 힐링 훌라 오하나 · 10주의 기록",
       "original": "강남힐링훌라오하나_10주의기록.mp4",
-      "duration": 0
+      "duration": 305
     }
   ],
   "curriculum": [
