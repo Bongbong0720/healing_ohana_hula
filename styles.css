@@ -43,3 +43,7 @@ dialog.is-visual-only .dialog-header{padding-top:12px;padding-bottom:12px}
 
 /* Keep the loading fallback behind successfully loaded photos. */
 .card-visual>img{position:relative}
+
+/* Graduation sub-tabs use the same secondary-filter styling. */
+.category-row .filter-chip[aria-selected=true]{background:#e5e9dc;color:var(--pine);border-color:#b9c7b3}
+.graduation-area:not(.is-focused) #graduation-groups{margin-top:24px}

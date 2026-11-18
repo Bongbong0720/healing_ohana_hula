@@ -41,6 +41,26 @@
     if (state.mode === 'song') for (const key of ['basic', 'unassigned']) if (pool().some(item => songKey(item) === key)) choices.push([key, LABELS[key]]);
     if (state.mode !== 'press') for (const [value, label] of choices) primary.append(chip(label, value, state.selection === value, (selection) => { state.selection = selection; state.category = 'all'; render(); }));
     const categories = $('category-filters'); categories.replaceChildren();
+    categories.setAttribute('role', 'group'); categories.setAttribute('aria-label', '영상 종류 선택');
+    if (state.mode === 'week' && state.selection === 'graduation') {
+      const choices = [['all', '모든기록'], ...GRADUATION_GROUPS];
+      if (!choices.some(([value]) => value === state.category)) state.category = 'all';
+      categories.hidden = false; categories.setAttribute('role', 'tablist'); categories.setAttribute('aria-label', '종강모임 분류');
+      for (const [value, label] of choices) {
+        const selected = state.category === value;
+        const tab = chip(label, value, selected, next => { state.category = next; render(); });
+        tab.id = 'graduation-tab-' + value; tab.setAttribute('role', 'tab'); tab.removeAttribute('aria-pressed');
+        tab.setAttribute('aria-selected', String(selected)); tab.setAttribute('aria-controls', 'graduation-groups'); tab.tabIndex = selected ? 0 : -1;
+        tab.addEventListener('keydown', event => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault(); const index = choices.findIndex(([key]) => key === state.category);
+          const next = event.key === 'Home' ? 0 : event.key === 'End' ? choices.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : choices.length - 1)) % choices.length;
+          state.category = choices[next][0]; render(); $('graduation-tab-' + state.category).focus();
+        });
+        categories.append(tab);
+      }
+      return;
+    }
     const available = ['instructor', 'practice'].filter(category => selectedPool().some(item => item.type === 'video' && item.category === category));
     categories.hidden = !available.length || state.mode === 'press';
     if (!available.includes(state.category)) state.category = 'all';
@@ -70,24 +90,21 @@
     button.append(visual); button.addEventListener('click', () => openViewer(item, getViewerItems(), button)); return button;
   }
   function renderGraduation(items, show, query) {
-    const area = $('graduation-area'), groups = $('graduation-groups'); area.hidden = !show;
-    if (!show) { groups.replaceChildren(); return; }
+    const area = $('graduation-area'), grid = $('graduation-groups'); area.hidden = !show;
+    if (!show) { grid.replaceChildren(); return; }
     const focused = state.selection === 'graduation';
-    area.classList.toggle('is-focused', focused); $('graduation-heading').hidden = focused; area.setAttribute('aria-labelledby', focused ? 'view-title' : 'graduation-title');
-    const fragment = document.createDocumentFragment();
-    for (const [key, label] of GRADUATION_GROUPS) {
-      const groupItems = items.filter(item => groupKey(item) === key), section = el('section', 'graduation-group'), head = el('div', 'graduation-group-head'), heading = el('h4', '', label);
-      heading.id = 'graduation-group-' + key; section.setAttribute('aria-labelledby', heading.id); head.append(heading, el('span', 'graduation-group-count', groupItems.length + '개의 기록')); section.append(head);
-      if (groupItems.length) { const grid = el('div', 'media-grid graduation-grid'); for (const item of groupItems) grid.append(makeGraduationCard(item, () => [...items])); section.append(grid); }
-      else section.append(el('p', 'graduation-empty', query ? '검색어와 맞는 ' + label + ' 기록이 없어요.' : '아직 표시할 ' + label + ' 기록이 없어요.'));
-      fragment.append(section);
-    }
-    groups.replaceChildren(fragment);
+    area.classList.toggle('is-focused', focused); $('graduation-heading').hidden = focused;
+    area.setAttribute('aria-labelledby', focused ? 'view-title' : 'graduation-title');
+    grid.classList.add('media-grid', 'graduation-grid');
+    if (focused) { grid.setAttribute('role', 'tabpanel'); grid.setAttribute('aria-labelledby', 'graduation-tab-' + state.category); grid.tabIndex = 0; }
+    else { grid.removeAttribute('role'); grid.removeAttribute('aria-labelledby'); grid.removeAttribute('tabindex'); }
+    grid.replaceChildren(...items.map(item => makeGraduationCard(item, () => [...items])));
   }
   function renderContext() {
     const selected = state.selection !== 'all', graduation = state.mode === 'week' && state.selection === 'graduation';
     $('view-title').textContent = state.mode === 'press' ? '강남라이프의 시선으로' : state.mode === 'song' ? selected ? LABELS[state.selection] : '네 곡의 이야기, 한 걸음씩' : graduation ? '종강모임' : selected ? state.selection + '주차의 기록' : '열 번의 만남, 우리의 기록';
-    $('view-description').textContent = state.mode === 'press' ? '강남라이프 촬영 · 함께한 순간을 담은 기록입니다.' : state.mode === 'song' ? state.selection === 'unassigned' ? '원본 파일에 곡명이 없는 영상입니다. 잘못 분류하지 않도록 따로 모았습니다.' : '강사 영상과 연습 영상을 곡별로 모았습니다. 출석사진 등 사진은 주차별 기록에서 볼 수 있습니다.' : graduation ? '레이를 엮고 함께 웃던 마지막 날, Lei 만들기와 Party Time의 순간을 모았습니다.' : '수업 영상부터 사진까지, 그날의 순간들을 함께 살펴보세요.';
+    $('view-description').textContent = state.mode === 'press' ? '강남라이프 촬영 · 함께한 순간을 담은 기록입니다.' : state.mode === 'song' ? state.selection === 'unassigned' ? '원본 파일에 곡명이 없는 영상입니다. 잘못 분류하지 않도록 따로 모았습니다.' : '강사 영상과 연습 영상을 곡별로 모았습니다. 출석사진 등 사진은 주차별 기록에서 볼 수 있습니다.' : graduation ? '' : '수업 영상부터 사진까지, 그날의 순간들을 함께 살펴보세요.';
+    $('view-description').hidden = graduation;
     const note = $('curriculum-note'); note.replaceChildren();
     const plans = state.mode === 'week' && selected ? state.curriculum.filter(row => String(row.week) === state.selection) : [];
     note.hidden = !plans.length;
@@ -101,7 +118,7 @@
     const matches = item => !query || searchText(item).includes(query);
     const showGraduation = state.mode === 'week' && (state.selection === 'graduation' || state.selection === 'all' && state.category === 'all');
     const records = selectedPool().filter(item => !isGraduation(item) && (state.category === 'all' || item.type === 'video' && item.category === state.category) && matches(item));
-    const graduation = showGraduation ? GRADUATION_GROUPS.flatMap(([key]) => pool().filter(item => isGraduation(item) && groupKey(item) === key && matches(item))) : [];
+    const graduation = showGraduation ? GRADUATION_GROUPS.flatMap(([key]) => pool().filter(item => isGraduation(item) && groupKey(item) === key && (state.selection !== 'graduation' || state.category === 'all' || groupKey(item) === state.category) && matches(item))) : [];
     state.visible = [...records, ...graduation];
     const grid = $('media-grid'); const fragment = document.createDocumentFragment();
     for (const item of records) fragment.append(makeCard(item, () => [...records]));
