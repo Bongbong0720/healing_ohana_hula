@@ -13,3 +13,30 @@
 @media(max-width:1100px){.hero #hero-title{font-size:52px}}
 @media(max-width:800px){.hero #hero-title{font-size:clamp(35px,5.9vw,48px)}}
 @media(max-width:560px){.hero #hero-title{font-size:clamp(40px,11.5vw,60px);line-height:1.2;letter-spacing:-.7px;margin-bottom:22px}}
+
+/* Gangnam Life external article, closing gathering gallery (graduation-1). */
+.press-article{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:0 0 28px;padding:22px 26px;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--coral);color:var(--pine);transition:background .2s,border-color .2s}
+.press-article:hover{background:#fff;border-color:#c5cdbf;border-left-color:var(--coral)}
+.press-article-copy{min-width:0}
+.press-article-label{display:block;margin-bottom:8px;font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--coral)}
+.press-article-title{display:block;font-family:var(--serif);font-size:20px;font-weight:500;line-height:1.55;letter-spacing:-.6px;overflow-wrap:anywhere}
+.press-article-cta{display:flex;align-items:center;gap:10px;min-height:44px;font-size:12px;font-weight:600;white-space:nowrap}
+.press-article-cta svg{width:18px;transition:transform .2s}
+.press-article:hover .press-article-cta svg{transform:translateX(3px)}
+.graduation-area{margin-top:64px;padding-top:40px;border-top:1px solid var(--line)}
+.graduation-area.is-focused{margin-top:0;padding-top:0;border-top:0}
+.graduation-heading .eyebrow{font-size:9px;letter-spacing:2.2px;margin-bottom:12px}
+.graduation-heading h3{font-family:var(--serif);font-size:26px;font-weight:500;letter-spacing:-1px;line-height:1.5;margin:0 0 6px}
+.graduation-heading>p:last-child{margin:0;font-size:12px;line-height:1.8;color:var(--muted)}
+.graduation-group-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:32px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.graduation-area.is-focused .graduation-group:first-child .graduation-group-head{margin-top:0}
+.graduation-group-head h4{margin:0;font-size:17px;font-weight:600;letter-spacing:-.3px;color:var(--pine)}
+.graduation-group-count{font-size:10px;color:var(--muted);white-space:nowrap}
+.graduation-group+.graduation-group{margin-top:40px}
+.media-grid.graduation-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.graduation-card .card-visual{aspect-ratio:1/1;border-radius:2px}
+.graduation-empty{margin:0;padding:24px 18px;border:1px dashed var(--line);text-align:center;font-size:12px;line-height:1.8;color:var(--muted)}
+dialog.is-visual-only .dialog-header{padding-top:12px;padding-bottom:12px}
+@media(max-width:1100px){.media-grid.graduation-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
+@media(max-width:800px){.press-article-title{font-size:18px}.graduation-heading h3{font-size:23px}}
+@media(max-width:560px){.press-article{flex-direction:column;align-items:flex-start;gap:10px;padding:18px 18px 10px}.press-article-label{font-size:9px}.press-article-title{font-size:17px}.press-article-cta{font-size:11px}.graduation-area{margin-top:44px;padding-top:30px}.graduation-heading h3{font-size:21px}.graduation-heading>p:last-child{font-size:11px}.graduation-group-head{margin:26px 0 12px}.graduation-group-head h4{font-size:15px}.media-grid.graduation-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.graduation-card .card-visual{aspect-ratio:1/1}}

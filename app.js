@@ -3,7 +3,10 @@
   const $ = (id) => document.getElementById(id);
   const SONGS = [ ['ke-aloha', 'Ke Aloha'], ['pearly-shells', 'Pearly Shell'], ['ke-ao-nani', 'Ke Ao Nani'], ['hawaiian-wedding', 'Hawaiian Wedding Song'] ];
   const LABELS = Object.fromEntries([...SONGS, ['basic', '기본 동작'], ['unassigned', '곡 미분류']]);
-  const CATEGORIES = { instructor: '강사 영상', practice: '연습 영상', attendance: '수업 기록', photo: '사진', press: '강남라이프', workshop: '워크숍', mv: '종강 기념 영상' };
+  const CATEGORIES = { instructor: '강사 영상', practice: '연습 영상', attendance: '수업 기록', photo: '사진', press: '강남라이프', workshop: '워크숍', mv: '종강 기념 영상', graduation: '종강모임' };
+  const GRADUATION_GROUPS = [['lei', 'Lei 만들기'], ['party-time', 'Party Time']];
+  const GRADUATION_LABELS = Object.fromEntries(GRADUATION_GROUPS);
+  const GRADUATION_SEARCH = { lei: 'lei 레이 만들기', 'party-time': 'party time party-time partytime 파티 타임' };
   const PLAN_NOTICE = '학습 내용은 참가신청서의 계획을 참고했으며, 실제 기록은 파일의 주차 구분을 따릅니다.';
   const state = { items: [], curriculum: [], mode: 'week', selection: 'all', category: 'all', query: '', visible: [], loaded: false, loadError: false };
   let viewerItems = [], viewerIndex = 0, returnFocus = null;
@@ -18,19 +21,23 @@
     return './' + encodeURIComponent(name);
   }
   function isPress(item) { let name = String(item.original || '') + ' ' + String(item.src || ''); try { name = decodeURIComponent(name); } catch (_) {} return item.category === 'press' || name.includes('강남라이프'); }
-  function isRegular(item) { return !isPress(item) && item.category !== 'workshop' && item.category !== 'mv'; }
+  function isGraduation(item) { return item.category === 'graduation'; }
+  function groupKey(item) { return Object.hasOwn(GRADUATION_LABELS, item.group) ? item.group : ''; }
+  function isRegular(item) { return !isGraduation(item) && !isPress(item) && item.category !== 'workshop' && item.category !== 'mv'; }
   function songKey(item) { return Object.hasOwn(LABELS, item.song) ? item.song : 'unassigned'; }
   function songLabel(value) { if (Object.hasOwn(LABELS, value)) return LABELS[value]; return String(value || ''); }
   function weekLabel(item) { return item.week ? item.week + '주차' : ''; }
-  function titleFor(item) { return String(item.title || '').trim() || (item.week ? item.week + '주차의 기록' : item.category === 'mv' ? '종강 기념 영상' : isPress(item) ? '강남라이프의 기록' : '함께한 순간의 기록'); }
+  function titleFor(item) { return String(item.title || '').trim() || (isGraduation(item) ? (GRADUATION_LABELS[groupKey(item)] || '종강모임') + '의 순간' : item.week ? item.week + '주차의 기록' : item.category === 'mv' ? '종강 기념 영상' : isPress(item) ? '강남라이프의 기록' : '함께한 순간의 기록'); }
   function duration(seconds) { const n = Number(seconds); if (!Number.isFinite(n) || n <= 0) return ''; const total = Math.round(n), h = Math.floor(total / 3600), m = Math.floor(total % 3600 / 60), s = String(total % 60).padStart(2, '0'); return h ? h + ':' + String(m).padStart(2, '0') + ':' + s : m + ':' + s; }
-  function pool(mode = state.mode) { if (mode === 'press') return state.items.filter(isPress); if (mode === 'song') return state.items.filter(item => item.type === 'video' && isRegular(item)); return state.items.filter(item => item.week && isRegular(item)); }
-  function selectedPool() { return pool().filter(item => state.selection === 'all' || (state.mode === 'week' ? String(item.week) === state.selection : state.mode === 'song' ? songKey(item) === state.selection : true)); }
+  function graduationLabel(item) { const group = GRADUATION_LABELS[groupKey(item)] || '', title = titleFor(item); return [...new Set(['종강모임', group && !title.includes(group) ? group : '', title].filter(Boolean))].join(' · '); }
+  function searchText(item) { const graduation = isGraduation(item), key = groupKey(item); return [titleFor(item), item.original, weekLabel(item), graduation ? '' : LABELS[songKey(item)], CATEGORIES[item.category], isPress(item) ? '강남라이프 촬영' : '', graduation && key ? GRADUATION_LABELS[key] + ' ' + GRADUATION_SEARCH[key] : ''].join(' ').toLocaleLowerCase('ko'); }
+  function pool(mode = state.mode) { if (mode === 'press') return state.items.filter(item => !isGraduation(item) && isPress(item)); if (mode === 'song') return state.items.filter(item => item.type === 'video' && isRegular(item)); return state.items.filter(item => isGraduation(item) ? Boolean(groupKey(item)) : item.week && isRegular(item)); }
+  function selectedPool() { return pool().filter(item => state.selection === 'all' || (state.mode === 'week' ? (state.selection === 'graduation' ? isGraduation(item) : !isGraduation(item) && String(item.week) === state.selection) : state.mode === 'song' ? songKey(item) === state.selection : true)); }
   function chip(label, value, selected, onClick) { const button = el('button', 'filter-chip', label); button.type = 'button'; button.setAttribute('aria-pressed', String(selected)); button.dataset.value = value; button.addEventListener('click', () => { const group = button.parentElement; onClick(value); const replacement = group && Array.from(group.children).find(candidate => candidate.dataset.value === value); if (replacement) replacement.focus({ preventScroll: true }); }); return button; }
   function renderFilters() {
     const primary = $('primary-filters'); primary.replaceChildren(); primary.hidden = state.mode === 'press';
     primary.setAttribute('aria-label', state.mode === 'song' ? '연습곡 선택' : '주차 선택');
-    const choices = state.mode === 'week' ? [['all', '전체'], ...Array.from({ length: 10 }, (_, i) => [String(i + 1), (i + 1) + '주차'])] : [['all', '전체'], ...SONGS];
+    const choices = state.mode === 'week' ? [['all', '전체'], ...Array.from({ length: 10 }, (_, i) => [String(i + 1), (i + 1) + '주차']), ['graduation', '종강모임']] : [['all', '전체'], ...SONGS];
     if (state.mode === 'song') for (const key of ['basic', 'unassigned']) if (pool().some(item => songKey(item) === key)) choices.push([key, LABELS[key]]);
     if (state.mode !== 'press') for (const [value, label] of choices) primary.append(chip(label, value, state.selection === value, (selection) => { state.selection = selection; state.category = 'all'; render(); }));
     const categories = $('category-filters'); categories.replaceChildren();
@@ -54,10 +61,33 @@
     if (isPress(item)) button.append(el('span', 'card-credit', '강남라이프 촬영'));
     button.addEventListener('click', () => openViewer(item, getViewerItems(), button)); return button;
   }
+  function makeGraduationCard(item, getViewerItems) {
+    const button = el('button', 'media-card graduation-card'); button.type = 'button'; button.setAttribute('aria-label', graduationLabel(item) + ' · ' + (item.type === 'video' ? '영상 보기' : '사진 보기'));
+    const visual = el('span', 'card-visual'), fallback = el('span', 'card-fallback'); fallback.append(icon(item.type === 'video' ? 'play' : 'photo')); visual.append(fallback);
+    const thumb = asset(item.thumb) || (item.type === 'image' ? asset(item.src) : '');
+    if (thumb) { const image = el('img'); image.src = thumb; image.alt = ''; image.loading = 'lazy'; image.decoding = 'async'; image.addEventListener('error', () => image.remove(), { once: true }); visual.append(image); }
+    if (item.type === 'video') { const play = el('span', 'card-play'); play.append(icon('play')); visual.append(play); }
+    button.append(visual); button.addEventListener('click', () => openViewer(item, getViewerItems(), button)); return button;
+  }
+  function renderGraduation(items, show, query) {
+    const area = $('graduation-area'), groups = $('graduation-groups'); area.hidden = !show;
+    if (!show) { groups.replaceChildren(); return; }
+    const focused = state.selection === 'graduation';
+    area.classList.toggle('is-focused', focused); $('graduation-heading').hidden = focused; area.setAttribute('aria-labelledby', focused ? 'view-title' : 'graduation-title');
+    const fragment = document.createDocumentFragment();
+    for (const [key, label] of GRADUATION_GROUPS) {
+      const groupItems = items.filter(item => groupKey(item) === key), section = el('section', 'graduation-group'), head = el('div', 'graduation-group-head'), heading = el('h4', '', label);
+      heading.id = 'graduation-group-' + key; section.setAttribute('aria-labelledby', heading.id); head.append(heading, el('span', 'graduation-group-count', groupItems.length + '개의 기록')); section.append(head);
+      if (groupItems.length) { const grid = el('div', 'media-grid graduation-grid'); for (const item of groupItems) grid.append(makeGraduationCard(item, () => [...items])); section.append(grid); }
+      else section.append(el('p', 'graduation-empty', query ? '검색어와 맞는 ' + label + ' 기록이 없어요.' : '아직 표시할 ' + label + ' 기록이 없어요.'));
+      fragment.append(section);
+    }
+    groups.replaceChildren(fragment);
+  }
   function renderContext() {
-    const selected = state.selection !== 'all';
-    $('view-title').textContent = state.mode === 'press' ? '강남라이프의 시선으로' : state.mode === 'song' ? selected ? LABELS[state.selection] : '네 곡의 이야기, 한 걸음씩' : selected ? state.selection + '주차의 기록' : '열 번의 만남, 우리의 기록';
-    $('view-description').textContent = state.mode === 'press' ? '강남라이프 촬영 · 함께한 순간을 담은 기록입니다.' : state.mode === 'song' ? state.selection === 'unassigned' ? '원본 파일에 곡명이 없는 영상입니다. 잘못 분류하지 않도록 따로 모았습니다.' : '강사 영상과 연습 영상을 곡별로 모았습니다. 출석사진 등 사진은 주차별 기록에서 볼 수 있습니다.' : '수업 영상부터 사진까지, 그날의 순간들을 함께 살펴보세요.';
+    const selected = state.selection !== 'all', graduation = state.mode === 'week' && state.selection === 'graduation';
+    $('view-title').textContent = state.mode === 'press' ? '강남라이프의 시선으로' : state.mode === 'song' ? selected ? LABELS[state.selection] : '네 곡의 이야기, 한 걸음씩' : graduation ? '종강모임' : selected ? state.selection + '주차의 기록' : '열 번의 만남, 우리의 기록';
+    $('view-description').textContent = state.mode === 'press' ? '강남라이프 촬영 · 함께한 순간을 담은 기록입니다.' : state.mode === 'song' ? state.selection === 'unassigned' ? '원본 파일에 곡명이 없는 영상입니다. 잘못 분류하지 않도록 따로 모았습니다.' : '강사 영상과 연습 영상을 곡별로 모았습니다. 출석사진 등 사진은 주차별 기록에서 볼 수 있습니다.' : graduation ? '레이를 엮고 함께 웃던 마지막 날, Lei 만들기와 Party Time의 순간을 모았습니다.' : '수업 영상부터 사진까지, 그날의 순간들을 함께 살펴보세요.';
     const note = $('curriculum-note'); note.replaceChildren();
     const plans = state.mode === 'week' && selected ? state.curriculum.filter(row => String(row.week) === state.selection) : [];
     note.hidden = !plans.length;
@@ -68,10 +98,15 @@
     if (!state.loaded) return;
     renderFilters(); renderContext();
     const query = state.query.trim().toLocaleLowerCase('ko');
-    state.visible = selectedPool().filter(item => (state.category === 'all' || item.type === 'video' && item.category === state.category) && (!query || [titleFor(item), item.original, weekLabel(item), LABELS[songKey(item)], CATEGORIES[item.category], isPress(item) ? '강남라이프 촬영' : ''].join(' ').toLocaleLowerCase('ko').includes(query)));
+    const matches = item => !query || searchText(item).includes(query);
+    const showGraduation = state.mode === 'week' && (state.selection === 'graduation' || state.selection === 'all' && state.category === 'all');
+    const records = selectedPool().filter(item => !isGraduation(item) && (state.category === 'all' || item.type === 'video' && item.category === state.category) && matches(item));
+    const graduation = showGraduation ? GRADUATION_GROUPS.flatMap(([key]) => pool().filter(item => isGraduation(item) && groupKey(item) === key && matches(item))) : [];
+    state.visible = [...records, ...graduation];
     const grid = $('media-grid'); const fragment = document.createDocumentFragment();
-    for (const item of state.visible) fragment.append(makeCard(item, () => [...state.visible]));
-    grid.replaceChildren(fragment); grid.setAttribute('aria-busy', 'false');
+    for (const item of records) fragment.append(makeCard(item, () => [...records]));
+    grid.replaceChildren(fragment); grid.setAttribute('aria-busy', 'false'); grid.hidden = state.mode === 'week' && state.selection === 'graduation';
+    renderGraduation(graduation, showGraduation, query);
     $('result-count').textContent = state.visible.length + '개의 기록' + (query ? ' · 검색 결과' : '');
     $('empty-state').hidden = state.visible.length > 0;
     $('empty-title').textContent = query ? '검색 결과가 없어요' : '아직 표시할 기록이 없어요';
@@ -80,7 +115,7 @@
   }
   function setMode(mode, reset = true) {
     if (!['week', 'song', 'press'].includes(mode)) return;
-    state.mode = mode;
+    state.mode = mode; $('press-article').hidden = mode !== 'press';
     if (reset) { state.selection = 'all'; state.category = 'all'; state.query = ''; $('search').value = ''; }
     for (const tab of document.querySelectorAll('[data-mode]')) { const selected = tab.dataset.mode === mode; tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1; }
     $('archive-panel').setAttribute('aria-labelledby', 'tab-' + mode);
@@ -100,11 +135,13 @@
   function stopMedia() { for (const video of $('dialog-stage').querySelectorAll('video')) { video.pause(); try { video.currentTime = 0; } catch (_) {} video.removeAttribute('src'); video.load(); } $('dialog-stage').replaceChildren(); }
   function showCurrent() {
     stopMedia(); const item = viewerItems[viewerIndex]; if (!item) return;
-    $('dialog-title').textContent = titleFor(item);
-    $('dialog-meta').textContent = [weekLabel(item), item.song && LABELS[item.song] ? LABELS[item.song] : '', item.type === 'video' ? '영상' : '사진', duration(item.duration), isPress(item) ? '강남라이프 촬영' : CATEGORIES[item.category]].filter(Boolean).join(' · ');
+    const visualOnly = isGraduation(item), label = visualOnly ? graduationLabel(item) : titleFor(item);
+    dialog.classList.toggle('is-visual-only', visualOnly);
+    $('dialog-title').textContent = label; $('dialog-title').classList.toggle('sr-only', visualOnly); $('dialog-meta').hidden = visualOnly;
+    $('dialog-meta').textContent = visualOnly ? '' : [weekLabel(item), item.song && LABELS[item.song] ? LABELS[item.song] : '', item.type === 'video' ? '영상' : '사진', duration(item.duration), isPress(item) ? '강남라이프 촬영' : CATEGORIES[item.category]].filter(Boolean).join(' · ');
     const stage = $('dialog-stage'); let media;
-    if (item.type === 'video') { media = el('video'); media.controls = true; media.playsInline = true; media.preload = 'none'; if (asset(item.thumb)) media.poster = asset(item.thumb); media.setAttribute('aria-label', titleFor(item)); media.append(el('p', '', '이 브라우저는 동영상 재생을 지원하지 않습니다.')); }
-    else { media = el('img'); media.alt = titleFor(item) + (isPress(item) ? ' · 강남라이프 촬영' : ''); }
+    if (item.type === 'video') { media = el('video'); media.controls = true; media.playsInline = true; media.preload = 'none'; if (asset(item.thumb)) media.poster = asset(item.thumb); media.setAttribute('aria-label', label); media.append(el('p', '', '이 브라우저는 동영상 재생을 지원하지 않습니다.')); }
+    else { media = el('img'); media.alt = label + (!visualOnly && isPress(item) ? ' · 강남라이프 촬영' : ''); }
     media.addEventListener('error', () => { if (!stage.querySelector('.media-error')) { const error = el('p', 'media-error', '이 파일을 불러오지 못했어요. 다른 기록을 선택하거나 잠시 후 다시 시도해 주세요.'); stage.replaceChildren(error); } }, { once: true });
     media.src = asset(item.src); stage.append(media);
     $('dialog-position').textContent = (viewerIndex + 1) + ' / ' + viewerItems.length;
