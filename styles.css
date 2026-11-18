@@ -40,3 +40,6 @@ dialog.is-visual-only .dialog-header{padding-top:12px;padding-bottom:12px}
 @media(max-width:1100px){.media-grid.graduation-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
 @media(max-width:800px){.press-article-title{font-size:18px}.graduation-heading h3{font-size:23px}}
 @media(max-width:560px){.press-article{flex-direction:column;align-items:flex-start;gap:10px;padding:18px 18px 10px}.press-article-label{font-size:9px}.press-article-title{font-size:17px}.press-article-cta{font-size:11px}.graduation-area{margin-top:44px;padding-top:30px}.graduation-heading h3{font-size:21px}.graduation-heading>p:last-child{font-size:11px}.graduation-group-head{margin:26px 0 12px}.graduation-group-head h4{font-size:15px}.media-grid.graduation-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.graduation-card .card-visual{aspect-ratio:1/1}}
+
+/* Keep the loading fallback behind successfully loaded photos. */
+.card-visual>img{position:relative}
