@@ -175,7 +175,6 @@
   function renderCurriculum() {
     const list = $('curriculum-list'); list.replaceChildren(); $('curriculum-details').hidden = !state.curriculum.length;
     if (!state.curriculum.length) return;
-    list.before(el('p', 'section-description', PLAN_NOTICE));
     for (const row of state.curriculum) { const article = el('div', 'curriculum-item'); article.append(el('strong', '', row.week + '주차')); const body = el('div'); if (row.songs.length) body.append(el('h4', '', row.songs.map(songLabel).join(' · '))); if (row.note) body.append(el('p', '', row.note)); article.append(body); list.append(article); }
   }
   function renderWorkshop() { const items = state.items.filter(item => item.category === 'workshop' && item.type === 'image'); $('workshop-details').hidden = !items.length; $('workshop-count').textContent = items.length + '장의 사진'; $('workshop-grid').replaceChildren(...items.map(item => makeCard(item, () => items))); }
