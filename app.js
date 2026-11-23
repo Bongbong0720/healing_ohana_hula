@@ -7,7 +7,7 @@
   const GRADUATION_GROUPS = [['lei', 'Lei 만들기'], ['party-time', 'Party Time']];
   const GRADUATION_LABELS = Object.fromEntries(GRADUATION_GROUPS);
   const GRADUATION_SEARCH = { lei: 'lei 레이 만들기', 'party-time': 'party time party-time partytime 파티 타임' };
-  const FESTIVAL_GROUPS = [['outdoor-performance', 'Ke Aloha 공연'], ['outdoor-group', '야외 단체사진'], ['indoor', 'Behind the Stage'], ['green-dress', '하나리케 마이투투 공연'], ['other', '그 밖의 순간']];
+  const FESTIVAL_GROUPS = [['outdoor-performance', 'Ke Aloha 공연'], ['outdoor-group', 'Healing Ohana Hula 팀'], ['indoor', 'Behind the Stage'], ['green-dress', '하나리케 마이투투 공연'], ['other', '그 밖의 순간']];
   const FESTIVAL_LABELS = Object.fromEntries(FESTIVAL_GROUPS);
   const MODES = ['week', 'song', 'press', 'festival'];
   const PLAN_NOTICE = '학습 내용은 참가신청서의 계획을 참고했으며, 실제 기록은 파일의 주차 구분을 따릅니다.';
@@ -193,7 +193,7 @@
   async function loadData() {
     state.loadError = false; $('media-grid').setAttribute('aria-busy', 'true'); $('result-count').textContent = '기록을 불러오는 중입니다.'; $('empty-state').hidden = true;
     try {
-      const response = await fetch('./media.json?v=vegan-festival-2'); if (!response.ok) throw new Error('HTTP ' + response.status);
+      const response = await fetch('./media.json?v=vegan-festival-3'); if (!response.ok) throw new Error('HTTP ' + response.status);
       const data = await response.json(); if (!data || !Array.isArray(data.items)) throw new Error('Invalid media data');
       state.items = data.items.filter(item => item && ['image', 'video'].includes(item.type) && asset(item.src)).map((item, index) => ({ ...item, id: item.id || 'record-' + index, week: Number.isInteger(item.week) && item.week >= 1 && item.week <= 10 ? item.week : null })).sort((a, b) => (a.week || 99) - (b.week || 99));
       state.curriculum = (Array.isArray(data.curriculum) ? data.curriculum : []).filter(row => row && Number.isInteger(row.week) && row.week >= 1 && row.week <= 10).map(row => ({ week: row.week, songs: Array.isArray(row.songs) ? row.songs.filter(value => typeof value === 'string') : [], note: typeof row.note === 'string' ? row.note : '' })).sort((a, b) => a.week - b.week);
