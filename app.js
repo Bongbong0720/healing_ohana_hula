@@ -3,10 +3,13 @@
   const $ = (id) => document.getElementById(id);
   const SONGS = [ ['ke-aloha', 'Ke Aloha'], ['pearly-shells', 'Pearly Shell'], ['ke-ao-nani', 'Ke Ao Nani'], ['hawaiian-wedding', 'Hawaiian Wedding Song'] ];
   const LABELS = Object.fromEntries([...SONGS, ['basic', '기본 동작'], ['unassigned', '곡 미분류']]);
-  const CATEGORIES = { instructor: '강사 영상', practice: '연습 영상', attendance: '수업 기록', photo: '사진', press: '강남라이프', workshop: '워크숍', mv: '종강 기념 영상', graduation: '종강모임' };
+  const CATEGORIES = { instructor: '강사 영상', practice: '연습 영상', attendance: '수업 기록', photo: '사진', press: '강남라이프', workshop: '워크숍', mv: '종강 기념 영상', graduation: '종강모임', festival: '비건페스티벌' };
   const GRADUATION_GROUPS = [['lei', 'Lei 만들기'], ['party-time', 'Party Time']];
   const GRADUATION_LABELS = Object.fromEntries(GRADUATION_GROUPS);
   const GRADUATION_SEARCH = { lei: 'lei 레이 만들기', 'party-time': 'party time party-time partytime 파티 타임' };
+  const FESTIVAL_GROUPS = [['outdoor-performance', '야외 무대'], ['outdoor-group', '야외 단체사진'], ['indoor', '실내'], ['green-dress', '녹색 드레스'], ['other', '그 밖의 순간']];
+  const FESTIVAL_LABELS = Object.fromEntries(FESTIVAL_GROUPS);
+  const MODES = ['week', 'song', 'press', 'festival'];
   const PLAN_NOTICE = '학습 내용은 참가신청서의 계획을 참고했으며, 실제 기록은 파일의 주차 구분을 따릅니다.';
   const state = { items: [], curriculum: [], mode: 'week', selection: 'all', category: 'all', query: '', visible: [], loaded: false, loadError: false };
   let viewerItems = [], viewerIndex = 0, returnFocus = null;
@@ -20,47 +23,52 @@
     if (name === '.' || name === '..' || /[\\/]/.test(name) || name.includes(':')) return '';
     return './' + encodeURIComponent(name);
   }
-  function isPress(item) { let name = String(item.original || '') + ' ' + String(item.src || ''); try { name = decodeURIComponent(name); } catch (_) {} return item.category === 'press' || name.includes('강남라이프'); }
+  function isFestival(item) { return item.category === 'festival'; }
+  function festivalKey(item) { return Object.hasOwn(FESTIVAL_LABELS, item.festivalPart) ? item.festivalPart : 'other'; }
+  function isPress(item) { if (isFestival(item)) return false; let name = String(item.original || '') + ' ' + String(item.src || ''); try { name = decodeURIComponent(name); } catch (_) {} return item.category === 'press' || name.includes('강남라이프'); }
   function isGraduation(item) { return item.category === 'graduation'; }
   function groupKey(item) { return Object.hasOwn(GRADUATION_LABELS, item.group) ? item.group : ''; }
-  function isRegular(item) { return !isGraduation(item) && !isPress(item) && item.category !== 'workshop' && item.category !== 'mv'; }
+  function isRegular(item) { return !isGraduation(item) && !isFestival(item) && !isPress(item) && item.category !== 'workshop' && item.category !== 'mv'; }
   function songKey(item) { return Object.hasOwn(LABELS, item.song) ? item.song : 'unassigned'; }
   function songLabel(value) { if (Object.hasOwn(LABELS, value)) return LABELS[value]; return String(value || ''); }
   function weekLabel(item) { return item.week ? item.week + '주차' : ''; }
-  function titleFor(item) { return String(item.title || '').trim() || (isGraduation(item) ? (GRADUATION_LABELS[groupKey(item)] || '종강모임') + '의 순간' : item.week ? item.week + '주차의 기록' : item.category === 'mv' ? '종강 기념 영상' : isPress(item) ? '강남라이프의 기록' : '함께한 순간의 기록'); }
+  function titleFor(item) { return String(item.title || '').trim() || (isGraduation(item) ? (GRADUATION_LABELS[groupKey(item)] || '종강모임') + '의 순간' : isFestival(item) ? FESTIVAL_LABELS[festivalKey(item)] + '의 순간' : item.week ? item.week + '주차의 기록' : item.category === 'mv' ? '종강 기념 영상' : isPress(item) ? '강남라이프의 기록' : '함께한 순간의 기록'); }
   function duration(seconds) { const n = Number(seconds); if (!Number.isFinite(n) || n <= 0) return ''; const total = Math.round(n), h = Math.floor(total / 3600), m = Math.floor(total % 3600 / 60), s = String(total % 60).padStart(2, '0'); return h ? h + ':' + String(m).padStart(2, '0') + ':' + s : m + ':' + s; }
   function graduationLabel(item) { const group = GRADUATION_LABELS[groupKey(item)] || '', title = titleFor(item); return [...new Set(['종강모임', group && !title.includes(group) ? group : '', title].filter(Boolean))].join(' · '); }
-  function searchText(item) { const graduation = isGraduation(item), key = groupKey(item); return [titleFor(item), item.original, weekLabel(item), graduation ? '' : LABELS[songKey(item)], CATEGORIES[item.category], isPress(item) ? '강남라이프 촬영' : '', graduation && key ? GRADUATION_LABELS[key] + ' ' + GRADUATION_SEARCH[key] : ''].join(' ').toLocaleLowerCase('ko'); }
-  function pool(mode = state.mode) { if (mode === 'press') return state.items.filter(item => !isGraduation(item) && isPress(item)); if (mode === 'song') return state.items.filter(item => item.type === 'video' && isRegular(item)); return state.items.filter(item => isGraduation(item) ? Boolean(groupKey(item)) : item.week && isRegular(item)); }
+  function festivalLabel(item) { const part = FESTIVAL_LABELS[festivalKey(item)], title = titleFor(item); return [...new Set(['비건페스티벌', title.includes(part) ? '' : part, title].filter(Boolean))].join(' · '); }
+  function visualLabel(item) { return isFestival(item) ? festivalLabel(item) : graduationLabel(item); }
+  function searchText(item) { const graduation = isGraduation(item), festival = isFestival(item), key = groupKey(item); return [titleFor(item), item.original, weekLabel(item), graduation || festival ? '' : LABELS[songKey(item)], CATEGORIES[item.category], isPress(item) ? '강남라이프 촬영' : '', graduation && key ? GRADUATION_LABELS[key] + ' ' + GRADUATION_SEARCH[key] : '', festival ? '비건 페스티벌 vegan festival ' + FESTIVAL_LABELS[festivalKey(item)] : ''].join(' ').toLocaleLowerCase('ko'); }
+  function pool(mode = state.mode) { if (mode === 'festival') return FESTIVAL_GROUPS.flatMap(([key]) => state.items.filter(item => isFestival(item) && festivalKey(item) === key)); if (mode === 'press') return state.items.filter(item => !isGraduation(item) && !isFestival(item) && isPress(item)); if (mode === 'song') return state.items.filter(item => item.type === 'video' && isRegular(item)); return state.items.filter(item => isGraduation(item) ? Boolean(groupKey(item)) : item.week && isRegular(item)); }
   function selectedPool() { return pool().filter(item => state.selection === 'all' || (state.mode === 'week' ? (state.selection === 'graduation' ? isGraduation(item) : !isGraduation(item) && String(item.week) === state.selection) : state.mode === 'song' ? songKey(item) === state.selection : true)); }
+  function subTabs(choices, prefix, controls, label) {
+    const categories = $('category-filters');
+    if (!choices.some(([value]) => value === state.category)) state.category = 'all';
+    categories.hidden = false; categories.setAttribute('role', 'tablist'); categories.setAttribute('aria-label', label);
+    for (const [value, text] of choices) {
+      const selected = state.category === value;
+      const tab = chip(text, value, selected, next => { state.category = next; render(); });
+      tab.id = prefix + value; tab.setAttribute('role', 'tab'); tab.removeAttribute('aria-pressed');
+      tab.setAttribute('aria-selected', String(selected)); tab.setAttribute('aria-controls', controls); tab.tabIndex = selected ? 0 : -1;
+      tab.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault(); const index = choices.findIndex(([key]) => key === state.category);
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? choices.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : choices.length - 1)) % choices.length;
+        state.category = choices[next][0]; render(); $(prefix + state.category).focus();
+      });
+      categories.append(tab);
+    }
+  }
   function chip(label, value, selected, onClick) { const button = el('button', 'filter-chip', label); button.type = 'button'; button.setAttribute('aria-pressed', String(selected)); button.dataset.value = value; button.addEventListener('click', () => { const group = button.parentElement; onClick(value); const replacement = group && Array.from(group.children).find(candidate => candidate.dataset.value === value); if (replacement) replacement.focus({ preventScroll: true }); }); return button; }
   function renderFilters() {
-    const primary = $('primary-filters'); primary.replaceChildren(); primary.hidden = state.mode === 'press';
+    const primary = $('primary-filters'); primary.replaceChildren(); primary.hidden = state.mode === 'press' || state.mode === 'festival';
     primary.setAttribute('aria-label', state.mode === 'song' ? '연습곡 선택' : '주차 선택');
     const choices = state.mode === 'week' ? [['all', '전체'], ...Array.from({ length: 10 }, (_, i) => [String(i + 1), (i + 1) + '주차']), ['graduation', '종강모임']] : [['all', '전체'], ...SONGS];
     if (state.mode === 'song') for (const key of ['basic', 'unassigned']) if (pool().some(item => songKey(item) === key)) choices.push([key, LABELS[key]]);
-    if (state.mode !== 'press') for (const [value, label] of choices) primary.append(chip(label, value, state.selection === value, (selection) => { state.selection = selection; state.category = 'all'; render(); }));
+    if (!primary.hidden) for (const [value, label] of choices) primary.append(chip(label, value, state.selection === value, (selection) => { state.selection = selection; state.category = 'all'; render(); }));
     const categories = $('category-filters'); categories.replaceChildren();
     categories.setAttribute('role', 'group'); categories.setAttribute('aria-label', '영상 종류 선택');
-    if (state.mode === 'week' && state.selection === 'graduation') {
-      const choices = [['all', '모든기록'], ...GRADUATION_GROUPS];
-      if (!choices.some(([value]) => value === state.category)) state.category = 'all';
-      categories.hidden = false; categories.setAttribute('role', 'tablist'); categories.setAttribute('aria-label', '종강모임 분류');
-      for (const [value, label] of choices) {
-        const selected = state.category === value;
-        const tab = chip(label, value, selected, next => { state.category = next; render(); });
-        tab.id = 'graduation-tab-' + value; tab.setAttribute('role', 'tab'); tab.removeAttribute('aria-pressed');
-        tab.setAttribute('aria-selected', String(selected)); tab.setAttribute('aria-controls', 'graduation-groups'); tab.tabIndex = selected ? 0 : -1;
-        tab.addEventListener('keydown', event => {
-          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-          event.preventDefault(); const index = choices.findIndex(([key]) => key === state.category);
-          const next = event.key === 'Home' ? 0 : event.key === 'End' ? choices.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : choices.length - 1)) % choices.length;
-          state.category = choices[next][0]; render(); $('graduation-tab-' + state.category).focus();
-        });
-        categories.append(tab);
-      }
-      return;
-    }
+    if (state.mode === 'week' && state.selection === 'graduation') { subTabs([['all', '모든기록'], ...GRADUATION_GROUPS], 'graduation-tab-', 'graduation-groups', '종강모임 분류'); return; }
+    if (state.mode === 'festival') { subTabs([['all', '모든기록'], ...FESTIVAL_GROUPS], 'festival-tab-', 'media-grid', '비건페스티벌 분류'); return; }
     const available = ['instructor', 'practice'].filter(category => selectedPool().some(item => item.type === 'video' && item.category === category));
     categories.hidden = !available.length || state.mode === 'press';
     if (!available.includes(state.category)) state.category = 'all';
@@ -82,7 +90,7 @@
     button.addEventListener('click', () => openViewer(item, getViewerItems(), button)); return button;
   }
   function makeGraduationCard(item, getViewerItems) {
-    const button = el('button', 'media-card graduation-card'); button.type = 'button'; button.setAttribute('aria-label', graduationLabel(item) + ' · ' + (item.type === 'video' ? '영상 보기' : '사진 보기'));
+    const button = el('button', 'media-card ' + (isFestival(item) ? 'visual-card' : 'graduation-card')); button.type = 'button'; button.setAttribute('aria-label', visualLabel(item) + ' · ' + (item.type === 'video' ? '영상 보기' : '사진 보기'));
     const visual = el('span', 'card-visual'), fallback = el('span', 'card-fallback'); fallback.append(icon(item.type === 'video' ? 'play' : 'photo')); visual.append(fallback);
     const thumb = asset(item.thumb) || (item.type === 'image' ? asset(item.src) : '');
     if (thumb) { const image = el('img'); image.src = thumb; image.alt = ''; image.loading = 'lazy'; image.decoding = 'async'; image.addEventListener('error', () => image.remove(), { once: true }); visual.append(image); }
@@ -101,12 +109,12 @@
     grid.replaceChildren(...items.map(item => makeGraduationCard(item, () => [...items])));
   }
   function renderContext() {
-    const selected = state.selection !== 'all', graduation = state.mode === 'week' && state.selection === 'graduation';
-    $('view-title').textContent = state.mode === 'press' ? '강남라이프의 시선으로' : state.mode === 'song' ? selected ? LABELS[state.selection] : '네 곡의 이야기, 한 걸음씩' : graduation ? '종강모임' : selected ? state.selection + '주차의 기록' : '열 번의 만남, 우리의 기록';
+    const selected = state.selection !== 'all', graduation = state.mode === 'week' && state.selection === 'graduation', festival = state.mode === 'festival';
+    $('view-title').textContent = festival ? '비건페스티벌' : state.mode === 'press' ? '강남라이프의 시선으로' : state.mode === 'song' ? selected ? LABELS[state.selection] : '네 곡의 이야기, 한 걸음씩' : graduation ? '종강모임' : selected ? state.selection + '주차의 기록' : '열 번의 만남, 우리의 기록';
     $('view-description').textContent = state.mode === 'press' ? '강남라이프 촬영 · 함께한 순간을 담은 기록입니다.' : state.mode === 'song' ? state.selection === 'unassigned' ? '원본 파일에 곡명이 없는 영상입니다. 잘못 분류하지 않도록 따로 모았습니다.' : '강사 영상과 연습 영상을 곡별로 모았습니다. 출석사진 등 사진은 주차별 기록에서 볼 수 있습니다.' : graduation ? '' : '수업 영상부터 사진까지, 그날의 순간들을 함께 살펴보세요.';
-    $('view-description').hidden = graduation;
+    $('view-description').hidden = graduation || festival;
     const note = $('curriculum-note'); note.replaceChildren();
-    const plans = state.mode === 'week' && selected && state.selection !== '10' ? state.curriculum.filter(row => String(row.week) === state.selection) : [];
+    const plans = state.mode === 'week' && selected ? state.curriculum.filter(row => String(row.week) === state.selection) : [];
     note.hidden = !plans.length;
     for (const plan of plans) { const songs = plan.songs.map(songLabel).filter(Boolean); if (songs.length) note.append(el('strong', '', songs.join(' · '))); if (plan.note) note.append(el('p', '', plan.note)); }
     if (plans.length) note.append(el('p', '', PLAN_NOTICE));
@@ -117,21 +125,25 @@
     const query = state.query.trim().toLocaleLowerCase('ko');
     const matches = item => !query || searchText(item).includes(query);
     const showGraduation = state.mode === 'week' && (state.selection === 'graduation' || state.selection === 'all' && state.category === 'all');
-    const records = selectedPool().filter(item => !isGraduation(item) && (state.category === 'all' || item.type === 'video' && item.category === state.category) && matches(item));
+    const festival = state.mode === 'festival';
+    const records = festival ? pool().filter(item => (state.category === 'all' || festivalKey(item) === state.category) && matches(item)) : selectedPool().filter(item => !isGraduation(item) && (state.category === 'all' || item.type === 'video' && item.category === state.category) && matches(item));
     const graduation = showGraduation ? GRADUATION_GROUPS.flatMap(([key]) => pool().filter(item => isGraduation(item) && groupKey(item) === key && (state.selection !== 'graduation' || state.category === 'all' || groupKey(item) === state.category) && matches(item))) : [];
     state.visible = [...records, ...graduation];
     const grid = $('media-grid'); const fragment = document.createDocumentFragment();
-    for (const item of records) fragment.append(makeCard(item, () => [...records]));
+    for (const item of records) fragment.append(festival ? makeGraduationCard(item, () => [...records]) : makeCard(item, () => [...records]));
+    grid.classList.toggle('visual-grid', festival);
+    if (festival) { grid.setAttribute('role', 'tabpanel'); grid.setAttribute('aria-labelledby', 'festival-tab-' + state.category); grid.tabIndex = 0; }
+    else { grid.removeAttribute('role'); grid.removeAttribute('aria-labelledby'); grid.removeAttribute('tabindex'); }
     grid.replaceChildren(fragment); grid.setAttribute('aria-busy', 'false'); grid.hidden = state.mode === 'week' && state.selection === 'graduation';
     renderGraduation(graduation, showGraduation, query);
     $('result-count').textContent = state.visible.length + '개의 기록' + (query ? ' · 검색 결과' : '');
     $('empty-state').hidden = state.visible.length > 0;
     $('empty-title').textContent = query ? '검색 결과가 없어요' : '아직 표시할 기록이 없어요';
-    $('empty-message').textContent = query ? '검색어를 바꾸거나 필터를 초기화해 보세요.' : '다른 주차나 연습곡을 선택해 보세요.';
+    $('empty-message').textContent = query ? '검색어를 바꾸거나 필터를 초기화해 보세요.' : festival ? '다른 분류를 선택해 보세요.' : '다른 주차나 연습곡을 선택해 보세요.';
     $('reset-filters').textContent = '필터 초기화';
   }
   function setMode(mode, reset = true) {
-    if (!['week', 'song', 'press'].includes(mode)) return;
+    if (!MODES.includes(mode)) return;
     state.mode = mode; $('press-article').hidden = mode !== 'press';
     if (reset) { state.selection = 'all'; state.category = 'all'; state.query = ''; $('search').value = ''; }
     for (const tab of document.querySelectorAll('[data-mode]')) { const selected = tab.dataset.mode === mode; tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1; }
@@ -139,12 +151,12 @@
     for (const link of document.querySelectorAll('[data-nav]')) { if (link.dataset.nav === mode) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); }
     render();
   }
-  const modeHash = { week: '#weeks', song: '#songs', press: '#press' };
+  const modeHash = { week: '#weeks', song: '#songs', press: '#press', festival: '#festival' };
   function navigate(mode, scroll) { setMode(mode); history.replaceState(null, '', modeHash[mode]); if (scroll) $('archive').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' }); }
   for (const link of document.querySelectorAll('[data-nav]')) link.addEventListener('click', event => { event.preventDefault(); navigate(link.dataset.nav, true); });
   for (const tab of document.querySelectorAll('[data-mode]')) {
     tab.addEventListener('click', () => navigate(tab.dataset.mode, false));
-    tab.addEventListener('keydown', event => { const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End']; if (!keys.includes(event.key)) return; event.preventDefault(); const modes = ['week', 'song', 'press']; let next = modes.indexOf(state.mode); if (event.key === 'Home') next = 0; else if (event.key === 'End') next = 2; else next = (next + (event.key === 'ArrowRight' ? 1 : 2)) % 3; navigate(modes[next], false); $('tab-' + modes[next]).focus(); });
+    tab.addEventListener('keydown', event => { const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End']; if (!keys.includes(event.key)) return; event.preventDefault(); const modes = MODES; let next = modes.indexOf(state.mode); if (event.key === 'Home') next = 0; else if (event.key === 'End') next = modes.length - 1; else next = (next + (event.key === 'ArrowRight' ? 1 : modes.length - 1)) % modes.length; navigate(modes[next], false); $('tab-' + modes[next]).focus(); });
   }
   window.addEventListener('hashchange', () => { const entry = Object.entries(modeHash).find(([, hash]) => hash === location.hash); if (entry) { setMode(entry[0]); $('archive').scrollIntoView(); } });
   $('search').addEventListener('input', event => { state.query = event.target.value; render(); });
@@ -152,7 +164,7 @@
   function stopMedia() { for (const video of $('dialog-stage').querySelectorAll('video')) { video.pause(); try { video.currentTime = 0; } catch (_) {} video.removeAttribute('src'); video.load(); } $('dialog-stage').replaceChildren(); }
   function showCurrent() {
     stopMedia(); const item = viewerItems[viewerIndex]; if (!item) return;
-    const visualOnly = isGraduation(item), label = visualOnly ? graduationLabel(item) : titleFor(item);
+    const visualOnly = isGraduation(item) || isFestival(item), label = visualOnly ? visualLabel(item) : titleFor(item);
     dialog.classList.toggle('is-visual-only', visualOnly);
     $('dialog-title').textContent = label; $('dialog-title').classList.toggle('sr-only', visualOnly); $('dialog-meta').hidden = visualOnly;
     $('dialog-meta').textContent = visualOnly ? '' : [weekLabel(item), item.song && LABELS[item.song] ? LABELS[item.song] : '', item.type === 'video' ? '영상' : '사진', duration(item.duration), isPress(item) ? '강남라이프 촬영' : CATEGORIES[item.category]].filter(Boolean).join(' · ');
@@ -181,11 +193,11 @@
   async function loadData() {
     state.loadError = false; $('media-grid').setAttribute('aria-busy', 'true'); $('result-count').textContent = '기록을 불러오는 중입니다.'; $('empty-state').hidden = true;
     try {
-      const response = await fetch('./media.json?v=week10-final-1'); if (!response.ok) throw new Error('HTTP ' + response.status);
+      const response = await fetch('./media.json?v=vegan-festival-1'); if (!response.ok) throw new Error('HTTP ' + response.status);
       const data = await response.json(); if (!data || !Array.isArray(data.items)) throw new Error('Invalid media data');
       state.items = data.items.filter(item => item && ['image', 'video'].includes(item.type) && asset(item.src)).map((item, index) => ({ ...item, id: item.id || 'record-' + index, week: Number.isInteger(item.week) && item.week >= 1 && item.week <= 10 ? item.week : null })).sort((a, b) => (a.week || 99) - (b.week || 99));
       state.curriculum = (Array.isArray(data.curriculum) ? data.curriculum : []).filter(row => row && Number.isInteger(row.week) && row.week >= 1 && row.week <= 10).map(row => ({ week: row.week, songs: Array.isArray(row.songs) ? row.songs.filter(value => typeof value === 'string') : [], note: typeof row.note === 'string' ? row.note : '' })).sort((a, b) => a.week - b.week);
-      state.loaded = true; for (const mode of ['week', 'song', 'press']) $('count-' + mode).textContent = pool(mode).length;
+      state.loaded = true; for (const mode of MODES) $('count-' + mode).textContent = pool(mode).length;
       renderCurriculum(); renderWorkshop();
       const entry = Object.entries(modeHash).find(([, hash]) => hash === location.hash); setMode(entry ? entry[0] : state.mode, false);
       if (entry) $('archive').scrollIntoView({ behavior: 'instant' });
