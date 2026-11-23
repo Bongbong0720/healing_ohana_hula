@@ -193,7 +193,7 @@
   async function loadData() {
     state.loadError = false; $('media-grid').setAttribute('aria-busy', 'true'); $('result-count').textContent = '기록을 불러오는 중입니다.'; $('empty-state').hidden = true;
     try {
-      const response = await fetch('./media.json?v=vegan-festival-3'); if (!response.ok) throw new Error('HTTP ' + response.status);
+      const response = await fetch('./media.json?v=vegan-festival-4'); if (!response.ok) throw new Error('HTTP ' + response.status);
       const data = await response.json(); if (!data || !Array.isArray(data.items)) throw new Error('Invalid media data');
       state.items = data.items.filter(item => item && ['image', 'video'].includes(item.type) && asset(item.src)).map((item, index) => ({ ...item, id: item.id || 'record-' + index, week: Number.isInteger(item.week) && item.week >= 1 && item.week <= 10 ? item.week : null })).sort((a, b) => (a.week || 99) - (b.week || 99));
       state.curriculum = (Array.isArray(data.curriculum) ? data.curriculum : []).filter(row => row && Number.isInteger(row.week) && row.week >= 1 && row.week <= 10).map(row => ({ week: row.week, songs: Array.isArray(row.songs) ? row.songs.filter(value => typeof value === 'string') : [], note: typeof row.note === 'string' ? row.note : '' })).sort((a, b) => a.week - b.week);
